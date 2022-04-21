@@ -87,12 +87,24 @@ namespace MonoGame_Snake_Demo
                 playerPos.X += (float)(50 * gameTime.ElapsedGameTime.TotalSeconds);
             }
 
-
             // Set the rect we draw at to the converted int of the position
             playerRect.X = (int)playerPos.X;
             playerRect.Y = (int)playerPos.Y;
 
+            // Check for collision with the objective
+            if (playerRect.Intersects(objectiveRect))
+            {
+                // Move the objective
+                MoveObjective();
+            }
+
             base.Update(gameTime);
+        }
+
+        private void MoveObjective()
+        {
+            objectiveRect.X = rng.Next(0, 500);
+            objectiveRect.Y = rng.Next(0, 500);
         }
 
         protected override void Draw(GameTime gameTime)
