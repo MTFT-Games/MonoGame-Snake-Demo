@@ -48,8 +48,36 @@ namespace MonoGame_Snake_Demo
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            // Get the state of the keyboard at the start of the frame
+            KeyboardState kbState = Keyboard.GetState();
 
-            // TODO: Add your update logic here
+            // Check if a key is pressed down
+            if (kbState.IsKeyDown(Keys.W))
+            {
+                // Do something, in this case move up
+                // Remember, up is negative y. Also, multiply your movement by the
+                // time since last frame so its frame independent.
+                // This also makes your movement in units/sec instead of units/frame
+                playerPos.Y -= (float)(50 * gameTime.ElapsedGameTime.TotalSeconds);
+            }
+            // Repeat for other directions
+            if (kbState.IsKeyDown(Keys.A))
+            {
+                playerPos.X -= (float)(50 * gameTime.ElapsedGameTime.TotalSeconds);
+            }
+            if (kbState.IsKeyDown(Keys.S))
+            {
+                playerPos.Y += (float)(50 * gameTime.ElapsedGameTime.TotalSeconds);
+            }
+            if (kbState.IsKeyDown(Keys.D))
+            {
+                playerPos.X += (float)(50 * gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+
+            // Set the rect we draw at to the converted int of the position
+            playerRect.X = (int)playerPos.X;
+            playerRect.Y = (int)playerPos.Y;
 
             base.Update(gameTime);
         }
