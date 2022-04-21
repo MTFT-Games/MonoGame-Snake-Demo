@@ -22,6 +22,11 @@ namespace MonoGame_Snake_Demo
         // (we dont need float positions so we can just stick to the rect without a vector)
         private Rectangle objectiveRect;
 
+        private int score;
+
+        // Spritefont to convert text to drawable images
+        private SpriteFont arial12;
+
         private Random rng;
 
         public Game1()
@@ -43,6 +48,8 @@ namespace MonoGame_Snake_Demo
             // Initialize the objective
             objectiveRect = new Rectangle(rng.Next(0, 500), rng.Next(0, 500), 30, 30); ;
 
+            score = 0;
+
             base.Initialize();
         }
 
@@ -50,7 +57,8 @@ namespace MonoGame_Snake_Demo
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // Load the spritefont
+            arial12 = Content.Load<SpriteFont>("arial12");
 
             // Make an empty texture that we can just tint to draw basic colors
             blankTexture = new Texture2D(GraphicsDevice, 1, 1);
@@ -96,6 +104,8 @@ namespace MonoGame_Snake_Demo
             {
                 // Move the objective
                 MoveObjective();
+
+                score++;
             }
 
             base.Update(gameTime);
@@ -119,6 +129,9 @@ namespace MonoGame_Snake_Demo
 
             // Draw objective
             _spriteBatch.Draw(blankTexture, objectiveRect, Color.Red);
+
+            // Draw score
+            _spriteBatch.DrawString(arial12, "Score: " + score, Vector2.Zero, Color.White);
             
             _spriteBatch.End();
 
