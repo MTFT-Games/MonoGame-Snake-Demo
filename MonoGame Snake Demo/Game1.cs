@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace MonoGame_Snake_Demo
 {
@@ -17,6 +18,12 @@ namespace MonoGame_Snake_Demo
         private Vector2 playerPos;
         private Rectangle playerRect;
 
+        // Keep track of the objective
+        // (we dont need float positions so we can just stick to the rect without a vector)
+        private Rectangle objectiveRect;
+
+        private Random rng;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -26,9 +33,15 @@ namespace MonoGame_Snake_Demo
 
         protected override void Initialize()
         {
+            // Initialize random object
+            rng = new Random();
+
             // Start the player at 30x30 at 100,100
             playerPos = new Vector2(100, 100);
             playerRect = new Rectangle(100, 100, 30, 30);
+
+            // Initialize the objective
+            objectiveRect = new Rectangle(rng.Next(0, 500), rng.Next(0, 500), 30, 30); ;
 
             base.Initialize();
         }
@@ -91,6 +104,9 @@ namespace MonoGame_Snake_Demo
 
             // Show the player as a blank square at the rectangle made earlier colored green
             _spriteBatch.Draw(blankTexture, playerRect, Color.White);
+
+            // Draw objective
+            _spriteBatch.Draw(blankTexture, objectiveRect, Color.Red);
             
             _spriteBatch.End();
 
